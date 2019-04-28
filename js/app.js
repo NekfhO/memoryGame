@@ -27,17 +27,25 @@ function shuffle(){
 
 for (let cardElement of cardElements) {
           
-    //console.log(cardElement);
-    cardElement.addEventListener('click', function(event){
-    	showCard(cardElement);
-    });
-}
+    
 
+    cardElement.addEventListener('click', function(event){
+    	if (!cardElement.classList.contains('open') && !cardElement.classList.contains('show') && !cardElement.classList.contains('match')){
+    			showCard(cardElement);
+    	}
+
+    	
+    });
+
+}
+// show card and and increase elements
 function showCard(cardElement) {
 	moves.innerHTML++;
 	cardElement.classList.add("show", "open");
 	openCards(cardElement);
 }
+
+//keep track of all open card
 
 function openCards(cardElement) {
 	
@@ -64,6 +72,7 @@ function openCards(cardElement) {
 	console.log(openCardsList);
 }
 
+// keep track of matched cards
 function openedCards(){
 	
 	for (const [index,value] of openCardsList.entries()){
@@ -79,6 +88,8 @@ function openedCards(){
 	}
 	
 }
+
+// in case two cards are not matched
 
 function wrongPick(){
 
@@ -97,6 +108,9 @@ restart.addEventListener('click', function(event){
 
     });
 
+
+//inital game plan
+
 function initial(){
 	shuffle();
 	moves.innerHTML=0;
@@ -109,6 +123,7 @@ function initial(){
 
 }
 
+// 1 second timer decresse
 function setTimer() {
     timerFun = setInterval(function(){
 	timerCount--;
@@ -126,6 +141,7 @@ function clearTime(){
 	clearinterval(timerFun);
 }
 
+// for stars
 
 function starts(){
 	if (moves.innerHTML >= 35 && moves.innerHTML <= 50 ){
