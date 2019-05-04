@@ -7,11 +7,12 @@
  let restart = document.querySelector('.restart');
  let moves = document.querySelector('.moves');
  let timer = document.querySelector('.timer');
- let timerCount = 5;
+ let timerCount = 60;
  let timerFun
  let stars = document.querySelectorAll('.fa-star')
- console.log(stars[1]);
- console.log(stars);
+ let localStarsInitial = document.querySelectorAll('.fa-star');
+ const mainHeading = document.querySelector('.stars');
+ 
 
 
  //stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
@@ -81,10 +82,10 @@ function openedCards(){
 	}
 	console.log(openedCardList);
 	if (openedCardList.length == 16){
-		swal('Congratulations!', 'You Won!!!', 'success');
+		winMessage();
 		clearInterval(timerFun);
 		openedCardList = [];
-		starts();
+		
 	}
 	
 }
@@ -120,7 +121,18 @@ function initial(){
     }
     timerCount = 60;
 
+    localStarsInitial = document.querySelectorAll('.fa-star');
 
+    if (localStarsInitial.length == 2){
+
+    mainHeading.appendChild(stars[0]);
+    mainHeading.appendChild(stars[1]);
+}
+
+ else {
+ 	mainHeading.appendChild(stars[0]);
+
+ }
 }
 
 // 1 second timer decresse
@@ -144,15 +156,47 @@ function clearTime(){
 // for stars
 
 function starts(){
-	if (moves.innerHTML >= 35 && moves.innerHTML <= 50 ){
+	if (moves.innerHTML <= 35){
+		//do nothing perfiect!!
+	}
+	 else if (moves.innerHTML >= 35 && moves.innerHTML <= 50 ){
 		stars[0].remove();
 
 	}
 	else {
+		stars[0].remove();
 		stars[1].remove();
 	}
 			
 }
+//Star rating
+//Time taken to win the game
+//Play again button
+
+function winMessage(){
+ starts();
+
+let localStars = document.querySelectorAll('.fa-star')
+  Swal.fire({
+  title: "your time is "+ timerCount + " seconds",
+  //text: "time is "+ timerCount + " seconds",
+  type: 'success',
+  html: localStars,
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'restart'
+}).then((result) => {
+  if (result.value) {
+    initial();
+  }
+})
+
+
+}
 
 initial();
+
+
+
 
